@@ -43,24 +43,23 @@ fn main() {
         // What is the largest prime factor of the number 600851475143 ?
         
         fn prime_factors(n: u64) -> Vec<u64> {
-            if n == 1 {
-                vec![]
-            } else {
-                let r = std::ops::Range { start: 2, end: n-1 }.
-                    filter(|x| n % x == 0).next();
-                match r {
-                    Some(i) => {
-                        let mut r = prime_factors(n / i);
-                        r.push(i);
-                        r
-                    },
-                    _ =>  vec![n]
-                }                
-            }            
+            if n == 1 { return vec![]; } 
+
+            match (
+                std::ops::Range { start: 2, end: n-1 }.
+                    filter(|x| n % x == 0).next()
+            ) {
+                Some(i) => {
+                    let mut r = prime_factors(n / i);
+                    r.push(i);
+                    r
+                },
+                _ =>  vec![n]
+            }
         }
 
         let q: u64 = 600851475143;
-        let a = prime_factors(600851475143);
+        let a = prime_factors(q);
         println!("The largest prime factor of {} is {}", q, &a[0]);        
     }
     
